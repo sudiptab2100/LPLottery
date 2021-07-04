@@ -1,0 +1,30 @@
+{
+  "name": "lplottery",
+  "version": "1.0.0",
+  "description": "Stake & Win Lottery",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sudiptab2100/LPLottery.git"
+  },
+  "author": "sudiptab2100@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sudiptab2100/LPLottery/issues"
+  },
+  "homepage": "https://github.com/sudiptab2100/LPLottery#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.2.0",
+    "@truffle/hdwallet-provider": "^1.4.1",
+    "web3": "^1.4.0"
+  },
+  "devDependencies": {
+    "truffle-plugin-verify": "^0.5.10"
+  }
+}
