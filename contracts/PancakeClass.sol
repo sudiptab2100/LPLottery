@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./PancakeInterfaces/IPancakeRouter02.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
+import "./PancakeInterfaces/IPancakeRouter02.sol";
 
 contract PancakeClass is ReentrancyGuard {
     using SafeMath for uint256;
@@ -53,6 +54,14 @@ contract PancakeClass is ReentrancyGuard {
         usrBal.balanceSafeMars = 0;
         out = out.add(usrBal.balanceSafeMars);
         IERC20(tokenSafeMars).transfer(account, out);
+    }
+
+    function convertBUSDToSafeMars(uint256 _amountIn) internal returns(uint256 amountOut) {
+        return _sellXGetY(tokenBUSD, tokenSafeMars, _amountIn);
+    }
+
+    function convertSafeMarsToBUSD(uint256 _amountIn) internal returns(uint256 amountOut) {
+        return _sellXGetY(tokenSafeMars, tokenBUSD, _amountIn);
     }
 
     function _addLiquidity(uint256 _amountSafeMars, uint256 _amountBUSD, address account) private {
