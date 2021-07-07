@@ -37,7 +37,7 @@ contract LpLottery is PancakeClass {
 
     function participateInSafemars(uint256 _lotteryId,uint256 amount) public {
         uint256 entryFee=amount.mul(4).div(100);
-        uint256 tokensGetInBusd =_sellXGetY(tokenSafeMars, tokenBUSD, entryFee);
+        uint256 tokensGetInBusd = convertSafeMarsToBUSD(entryFee);
         IERC20(tokenBUSD).transfer(address(this),tokensGetInBusd);
         lotteryStructs[_lotteryId].participate(tokensGetInBusd,msg.sender);
         uint256 stakingAmount=amount.sub(entryFee);

@@ -113,7 +113,7 @@ contract PancakeClass is ReentrancyGuard {
         usrBal.balanceLP = (usrBal.balanceLP).sub(_liquidity);
     }
 
-    function _sellXGetY(address _tokenXAddress, address _tokenYAddress, uint256 _amountXIn) internal nonReentrant returns(uint256 _amountYOut) {
+    function _sellXGetY(address _tokenXAddress, address _tokenYAddress, uint256 _amountXIn) private nonReentrant returns(uint256 _amountYOut) {
         IERC20(_tokenXAddress).approve(address(router), _amountXIn);
 
         address[] memory path = new address[](2);
