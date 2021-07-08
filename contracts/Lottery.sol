@@ -15,7 +15,7 @@ contract Lottery {
     address private tokenBUSD;
     mapping(uint256 => address) allParticipants;
 
-    constructor(uint256 _prizeValue, address _manager,address _tokenBUSD) {
+    constructor(uint256 _prizeValue, address _manager, address _tokenBUSD) {
         prizeValue = _prizeValue;
         entriesRequired = _prizeValue;
         manager = _manager;
@@ -26,21 +26,24 @@ contract Lottery {
     function participate(uint256 _amount, address _particpant) public {
         require(entriesRequired != 0, "context is full");
         require(isActive == true, "context is not active anymore");
+
+        uint256 _tickets = _amount.div(10**18);
         require(
-            entriesRequired >= _amount,
+            entriesRequired >= _tickets,
             "entree fee should be smaller than entries required"
         );
-        for (uint256 i = currentTicketId; i < _amount; currentTicketId++) {
+        for (uint256 i = currentTicketId; i < _tickets; i++) {
             allParticipants[i] = _particpant;
+            currentTicketId++;
         }
-        entriesRequired = entriesRequired.sub(_amount);
+        entriesRequired = entriesRequired.sub(_tickets);
         emit PlayerParticipated(_particpant);
     }
 
-    function declareWinner() public restricted{
+    function declareWinner() public restricted {
         uint256 winnerTicketNo = random().mod(prizeValue);
         isActive=false;
-        IERC20(tokenBUSD).transfer(allParticipants[winnerTicketNo],prizeValue);
+        IERC20(tokenBUSD).transfer(allParticipants[winnerTicketNo], prizeValue);
     }
 
     function random() private view returns (uint256) {
@@ -56,7 +59,7 @@ contract Lottery {
             );
     }
 
-    function getPrizeValue() public view returns(uint256){
+    function getPrizeValue() public view returns(uint256) {
         return prizeValue;
     }
     modifier restricted() {
