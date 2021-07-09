@@ -26,9 +26,10 @@ contract LpLottery is PancakeClass {
 
     function declareWinner(uint256 _lotteryId) public restricted {
         require(!lotteryWinnerDeclared[_lotteryId], "Winner already declared");
-
-        lotteryStructs[_lotteryId].declareWinner();
         lotteryWinnerDeclared[_lotteryId] = true;
+        address winner=lotteryStructs[_lotteryId].declareWinner();
+        uint256 tokensGetInSafemars=convertBUSDToSafeMars(lotteryStructs[_lotteryId].getPrizeValue());
+        IERC20(tokenSafeMars).transfer(winner, tokensGetInSafemars);
     }
 
     function participateInBusd(uint256 _lotteryId, uint256 amount) public {

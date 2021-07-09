@@ -40,10 +40,11 @@ contract Lottery {
         emit PlayerParticipated(_particpant);
     }
 
-    function declareWinner() public restricted {
-        uint256 winnerTicketNo = random().mod(prizeValue);
+    function declareWinner() public restricted returns(address){
+        require(isActive,"Context is not active anymore");
         isActive=false;
-        IERC20(tokenBUSD).transfer(allParticipants[winnerTicketNo], prizeValue);
+        uint256 winnerTicketNo = random().mod(prizeValue);
+        return allParticipants[winnerTicketNo];
     }
 
     function random() private view returns (uint256) {
