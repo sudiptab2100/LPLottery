@@ -17,32 +17,32 @@ contract Lottery {
 
     constructor(uint256 _prizeValue, address _manager, address _tokenBUSD) {
         prizeValue = _prizeValue;
-        entriesRequired = _prizeValue;
+        entriesRequired = _prizeValue.div(10**18);
         manager = _manager;
-        isActive=true;
-        tokenBUSD=_tokenBUSD;
+        isActive = true;
+        tokenBUSD = _tokenBUSD;
     }
 
     function participate(uint256 _amount, address _particpant) public {
         require(entriesRequired != 0, "context is full");
-        require(isActive == true, "context is not active anymore");
+        require(isActive, "context is not active anymore");
 
         uint256 _tickets = _amount.div(10**18);
         require(
             entriesRequired >= _tickets,
             "entree fee should be smaller than entries required"
         );
-        for (uint256 i = currentTicketId; i < _tickets; i++) {
-            allParticipants[i] = _particpant;
-            currentTicketId++;
+        for (uint256 i = 0; i < _tickets; i++) {
+            allParticipants[i + currentTicketId] = _particpant;
         }
+        currentTicketId += _tickets;
         entriesRequired = entriesRequired.sub(_tickets);
         emit PlayerParticipated(_particpant);
     }
 
     function declareWinner() public restricted returns(address){
         require(isActive,"Context is not active anymore");
-        isActive=false;
+        isActive = false;
         uint256 winnerTicketNo = random().mod(prizeValue);
         return allParticipants[winnerTicketNo];
     }
