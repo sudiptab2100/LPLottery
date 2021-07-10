@@ -18,22 +18,22 @@ contract LpLottery is PancakeClass {
     ) PancakeClass(_routerAddres, _tokenSafeMars, _tokenBUSD) {
         admin = msg.sender;
     }
-    function createContext(uint256 _prizeValue) public restricted{
-       lotteryId++;
+    function createContext(uint256 _prizeValue) public restricted {
        lotteryStructs[lotteryId] = new Lottery(_prizeValue, address(this), tokenBUSD);
+       lotteryId++;
        emit LotteryCreated(lotteryId);
     }
 
     function declareWinner(uint256 _lotteryId) public restricted {
         require(!lotteryWinnerDeclared[_lotteryId], "Winner already declared");
         lotteryWinnerDeclared[_lotteryId] = true;
-        address winner=lotteryStructs[_lotteryId].declareWinner();
-        uint256 tokensGetInSafemars=convertBUSDToSafeMars(lotteryStructs[_lotteryId].getPrizeValue());
+        address winner = lotteryStructs[_lotteryId].declareWinner();
+        uint256 tokensGetInSafemars = convertBUSDToSafeMars(lotteryStructs[_lotteryId].getPrizeValue());
         IERC20(tokenSafeMars).transfer(winner, tokensGetInSafemars);
     }
 
     function participateInBusd(uint256 _lotteryId, uint256 amount) public {
-        IERC20(tokenBUSD).transfer(address(this), amount);
+        IERC20(tokenBUSD).transferFrom(msg.sender, address(this), amount);
 
         uint256 entryFee = amount.mul(4).div(100);
         lotteryStructs[_lotteryId].participate(entryFee, msg.sender);
@@ -43,7 +43,7 @@ contract LpLottery is PancakeClass {
 
     function participateInSafemars(uint256 _lotteryId, uint256 amount) public nonReentrant {
         uint256 initBalance = IERC20(tokenSafeMars).balanceOf(address(this));
-        IERC20(tokenSafeMars).transfer(address(this), amount);
+        IERC20(tokenSafeMars).transferFrom(msg.sender, address(this), amount);
         amount = IERC20(tokenSafeMars).balanceOf(address(this)).sub(initBalance);
         
         uint256 entryFee = amount.mul(4).div(100);
