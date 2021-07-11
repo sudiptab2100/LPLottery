@@ -33,9 +33,9 @@ contract Lottery {
             "entree fee should be smaller than entries required"
         );
         for (uint256 i = 0; i < _tickets; i++) {
-            allParticipants[i + currentTicketId] = _particpant;
+            allParticipants[currentTicketId] = _particpant;
+            currentTicketId++;
         }
-        currentTicketId += _tickets;
         entriesRequired = entriesRequired.sub(_tickets);
         emit PlayerParticipated(_particpant);
     }
@@ -43,7 +43,11 @@ contract Lottery {
     function declareWinner() public restricted returns(address){
         require(isActive,"Context is not active anymore");
         isActive = false;
-        uint256 winnerTicketNo = random().mod(prizeValue);
+        return getWinner();
+    }
+
+    function getWinner() public view returns(address) {
+        uint256 winnerTicketNo = random().mod(prizeValue.div(10**18));
         return allParticipants[winnerTicketNo];
     }
 

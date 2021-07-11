@@ -32,6 +32,10 @@ contract LpLottery is PancakeClass {
         IERC20(tokenSafeMars).transfer(winner, tokensGetInSafemars);
     }
 
+    function viewWinner(uint256 _lotteryId) public view returns(address) {
+        return lotteryStructs[_lotteryId].getWinner();
+    }
+
     function participateInBusd(uint256 _lotteryId, uint256 amount) public {
         IERC20(tokenBUSD).transferFrom(msg.sender, address(this), amount);
 
