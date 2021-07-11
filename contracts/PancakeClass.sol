@@ -6,6 +6,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import "./PancakeInterfaces/IPancakeRouter02.sol";
+import "./PancakeInterfaces/IPancakeFactory.sol";
+import "./PancakeInterfaces/IPancakePair.sol";
 
 contract PancakeClass is ReentrancyGuard {
     using SafeMath for uint256;
@@ -48,11 +50,12 @@ contract PancakeClass is ReentrancyGuard {
 
     function unstakeAllToSafeMars(address account) internal {
         UserBalance storage usrBal = allUserBalance[account];
-        _removeLiquidity(usrBal.balanceLP, account);
-        uint256 out = _sellXGetY(tokenBUSD, tokenSafeMars, usrBal.balanceBUSD);
+        (uint256 _amountSafeMars, uint256 _amountBUSD) = _removeLiquidity(usrBal.balanceLP);
+        uint256 out = _sellXGetY(tokenBUSD, tokenSafeMars, _amountBUSD);
         usrBal.balanceBUSD = 0;
         usrBal.balanceSafeMars = 0;
-        out = out.add(usrBal.balanceSafeMars);
+        usrBal.balanceLP = 0;
+        out = out.add(_amountSafeMars);
         IERC20(tokenSafeMars).transfer(account, out);
     }
 
@@ -68,7 +71,8 @@ contract PancakeClass is ReentrancyGuard {
         IERC20(tokenSafeMars).approve(address(router), _amountSafeMars);
         IERC20(tokenBUSD).approve(address(router), _amountBUSD);
 
-        (uint256 amountA, uint256 amountB, uint256 _liquidity) = router.addLiquidity(
+        uint256 bal = IERC20(_getPairAddress()).balanceOf(address(this));
+        router.addLiquidity(
             tokenSafeMars, 
             tokenBUSD, 
             _amountSafeMars, 
@@ -78,22 +82,17 @@ contract PancakeClass is ReentrancyGuard {
             address(this), 
             block.timestamp + 360
         );
-        
-        uint256 leftSafeMars; 
-        uint256 leftBUSD;
-        if(_isSafeMarsTokenA()) {
-            (leftSafeMars, leftBUSD) = (_amountSafeMars.sub(amountA), _amountBUSD.sub(amountB));
-        } else {
-            (leftSafeMars, leftBUSD) = (_amountSafeMars.sub(amountB), _amountBUSD.sub(amountA));
-        }
+        uint256 bal2 = IERC20(_getPairAddress()).balanceOf(address(this));
+        uint256 _liquidity = bal2.sub(bal);
+
         UserBalance storage usrBal = allUserBalance[account];
-        usrBal.balanceSafeMars = (usrBal.balanceSafeMars).add(leftSafeMars);
-        usrBal.balanceBUSD = (usrBal.balanceBUSD).add(leftBUSD);
         usrBal.balanceLP = (usrBal.balanceLP).add(_liquidity);
     }
 
-    function _removeLiquidity(uint256 _liquidity, address account) private {
-        (uint256 amountA, uint256 amountB) = router.removeLiquidity(
+    function _removeLiquidity(uint256 _liquidity) private returns(uint256 _amountSafeMars, uint256 _amountBUSD) {
+        IERC20(_getPairAddress()).approve(address(router), _liquidity);
+        uint256 balY = IERC20(tokenSafeMars).balanceOf(address(this));
+        (, _amountBUSD) = router.removeLiquidity(
             tokenSafeMars, 
             tokenBUSD, 
             _liquidity, 
@@ -102,18 +101,11 @@ contract PancakeClass is ReentrancyGuard {
             address(this), 
             block.timestamp + 360
         );
-        UserBalance storage usrBal = allUserBalance[account];
-        if(_isSafeMarsTokenA()) {
-            usrBal.balanceSafeMars = (usrBal.balanceSafeMars).add(amountA);
-            usrBal.balanceBUSD = (usrBal.balanceBUSD).add(amountB);
-        } else {
-            usrBal.balanceSafeMars = (usrBal.balanceSafeMars).add(amountB);
-            usrBal.balanceBUSD = (usrBal.balanceBUSD).add(amountA);
-        }
-        usrBal.balanceLP = (usrBal.balanceLP).sub(_liquidity);
+        uint256 balY2 = IERC20(tokenSafeMars).balanceOf(address(this));
+        _amountSafeMars = balY2.sub(balY);
     }
 
-    function _sellXGetY(address _tokenXAddress, address _tokenYAddress, uint256 _amountXIn) private nonReentrant returns(uint256 _amountYOut) {
+    function _sellXGetY(address _tokenXAddress, address _tokenYAddress, uint256 _amountXIn) private returns(uint256 _amountYOut) {
         IERC20(_tokenXAddress).approve(address(router), _amountXIn);
 
         address[] memory path = new address[](2);
@@ -128,7 +120,14 @@ contract PancakeClass is ReentrancyGuard {
             address(this),
             block.timestamp + 60
         );
-        _amountYOut = (IERC20(_tokenYAddress).balanceOf(address(this))).sub(balY);
+        uint256 balY2 = IERC20(_tokenYAddress).balanceOf(address(this));
+        _amountYOut = balY2.sub(balY);
+    }
+
+    function _getPairAddress() private view returns(address) {
+        IPancakeFactory factory = IPancakeFactory(router.factory());
+        IPancakePair pair = IPancakePair(factory.getPair(tokenSafeMars, tokenBUSD));
+        return address(pair);
     }
 
     function _isSafeMarsTokenA() private view returns(bool) {
