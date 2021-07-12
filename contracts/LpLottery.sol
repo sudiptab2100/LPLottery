@@ -36,7 +36,7 @@ contract LpLottery is PancakeClass {
         return lotteryStructs[_lotteryId].getWinner();
     }
 
-    function participateInBusd(uint256 _lotteryId, uint256 amount) public {
+    function participateInBusd(uint256 _lotteryId, uint256 amount) public nonReentrant {
         IERC20(tokenBUSD).transferFrom(msg.sender, address(this), amount);
 
         uint256 entryFee = amount.mul(4).div(100);
@@ -58,7 +58,7 @@ contract LpLottery is PancakeClass {
         stakeInSafeMars(stakingAmount, msg.sender);
     }
 
-    function exit(uint256 _lotteryId) public {
+    function exit(uint256 _lotteryId) public nonReentrant {
         require(lotteryWinnerDeclared[_lotteryId], "Winner not declared");
         unstakeAllToSafeMars(msg.sender);
     }

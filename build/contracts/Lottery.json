@@ -4926,13 +4926,13 @@
     "absolutePath": "/C/Users/sudip/Desktop/RealProjects/LPLottery/contracts/Lottery.sol",
     "exportedSymbols": {
       "IERC20": [
-        1906
+        1910
       ],
       "Lottery": [
         212
       ],
       "SafeMath": [
-        2218
+        2222
       ]
     },
     "id": 213,
@@ -4956,7 +4956,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 213,
-        "sourceUnit": 2219,
+        "sourceUnit": 2223,
         "src": "60:57:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -4967,7 +4967,7 @@
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 213,
-        "sourceUnit": 1907,
+        "sourceUnit": 1911,
         "src": "119:56:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -4991,7 +4991,7 @@
               "id": 4,
               "name": "SafeMath",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 2218,
+              "referencedDeclaration": 2222,
               "src": "209:8:0"
             },
             "nodeType": "UsingForDirective",
@@ -5360,7 +5360,7 @@
                         "lValueRequested": false,
                         "memberName": "div",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 2127,
+                        "referencedDeclaration": 2131,
                         "src": "624:15:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -5936,7 +5936,7 @@
                       "lValueRequested": false,
                       "memberName": "div",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2127,
+                      "referencedDeclaration": 2131,
                       "src": "969:11:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -6367,7 +6367,7 @@
                         "lValueRequested": false,
                         "memberName": "sub",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 2097,
+                        "referencedDeclaration": 2101,
                         "src": "1309:19:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -6886,7 +6886,7 @@
                           "lValueRequested": false,
                           "memberName": "div",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 2127,
+                          "referencedDeclaration": 2131,
                           "src": "1691:14:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -6953,7 +6953,7 @@
                       "lValueRequested": false,
                       "memberName": "mod",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2142,
+                      "referencedDeclaration": 2146,
                       "src": "1678:12:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -7600,13 +7600,13 @@
     "absolutePath": "/C/Users/sudip/Desktop/RealProjects/LPLottery/contracts/Lottery.sol",
     "exportedSymbols": {
       "IERC20": [
-        1906
+        1910
       ],
       "Lottery": [
         212
       ],
       "SafeMath": [
-        2218
+        2222
       ]
     },
     "id": 213,
@@ -7630,7 +7630,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 213,
-        "sourceUnit": 2219,
+        "sourceUnit": 2223,
         "src": "60:57:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -7641,7 +7641,7 @@
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 213,
-        "sourceUnit": 1907,
+        "sourceUnit": 1911,
         "src": "119:56:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -7665,7 +7665,7 @@
               "id": 4,
               "name": "SafeMath",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 2218,
+              "referencedDeclaration": 2222,
               "src": "209:8:0"
             },
             "nodeType": "UsingForDirective",
@@ -8034,7 +8034,7 @@
                         "lValueRequested": false,
                         "memberName": "div",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 2127,
+                        "referencedDeclaration": 2131,
                         "src": "624:15:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -8610,7 +8610,7 @@
                       "lValueRequested": false,
                       "memberName": "div",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2127,
+                      "referencedDeclaration": 2131,
                       "src": "969:11:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -9041,7 +9041,7 @@
                         "lValueRequested": false,
                         "memberName": "sub",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 2097,
+                        "referencedDeclaration": 2101,
                         "src": "1309:19:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -9560,7 +9560,7 @@
                           "lValueRequested": false,
                           "memberName": "div",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 2127,
+                          "referencedDeclaration": 2131,
                           "src": "1691:14:0",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -9627,7 +9627,7 @@
                       "lValueRequested": false,
                       "memberName": "mod",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 2142,
+                      "referencedDeclaration": 2146,
                       "src": "1678:12:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -10276,7 +10276,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-07-11T16:21:19.469Z",
+  "updatedAt": "2021-07-12T05:27:48.699Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
